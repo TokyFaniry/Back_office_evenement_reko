@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import sequelize from "../../config/database.js";
 
 const TicketCategory = sequelize.define(
   "TicketCategory",
@@ -12,6 +12,8 @@ const TicketCategory = sequelize.define(
   },
   {
     timestamps: true,
+    freezeTableName: true, // Empêche Sequelize de modifier le nom de la table
+    tableName: "TicketCategories", // Nom exact de la table tel que créé dans la migration
   }
 );
 

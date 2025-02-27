@@ -1,34 +1,51 @@
-import fs from "fs";
-import path from "path";
-import { Sequelize } from "sequelize";
-import sequelize from "../config/database.js";
+import sequelize from "../../config/database.js";
+import Event from "./Event.js";
+import Ticket from "./Ticket.js";
+import TicketCategory from "./TicketCategory.js";
+import Image from "./Image.js";
 
-const basename = path.basename(__filename);
-const db = {};
+// Définition des relations
 
-// Importer les modèles
-fs.readdirSync(__dirname)
-  .filter((file) => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
-  })
-  .forEach((file) => {
-    const model = require(path.join(__dirname, file)).default(
-      sequelize,
-      Sequelize.DataTypes
-    );
-    db[model.name] = model;
-  });
-
-// Définir les associations
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+// Un événement a plusieurs tickets
+Event.hasMany(Ticket, {
+  foreignKey: "eventId",
+  as: "tickets",
+  onDelete: "CASCADE",
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+// Un ticket appartient à un événement
+Ticket.belongsTo(Event, {
+  foreignKey: "eventId",
+  as: "event",
+});
+
+// Une catégorie de billet a plusieurs tickets
+TicketCategory.hasMany(Ticket, {
+  foreignKey: "categoryId",
+  as: "tickets",
+  onDelete: "CASCADE",
+});
+
+// Un ticket appartient à une catégorie
+Ticket.belongsTo(TicketCategory, {
+  foreignKey: "categoryId",
+  as: "category",
+});
+
+Event.hasOne(Image, {
+  foreignKey: "eventId",
+  as: "image",
+  onDelete: "CASCADE",
+});
+Image.belongsTo(Event, { foreignKey: "eventId", as: "event" });
+
+// Exportation des modèles et de l'instance Sequelize
+const db = {
+  sequelize,
+  Event,
+  Ticket,
+  TicketCategory,
+  Image,
+};
 
 export default db;

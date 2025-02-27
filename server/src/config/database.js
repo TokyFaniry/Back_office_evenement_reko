@@ -1,21 +1,27 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Sequelize } from "sequelize";
 import logger from "./logger.js";
 
-// Validation des variables d'environnement
-const requiredEnvVars = ["DB_NAME", "DB_USER", "DB_PASSWORD", "DB_HOST"];
-requiredEnvVars.forEach((env) => {
-  if (!process.env[env]) {
-    logger.error(`Variable d'environnement manquante: ${env}`);
+// Validation des variables d'environnement obligatoires (non vides)
+const requiredEnvVars = ["DB_NAME", "DB_USER", "DB_HOST"];
+requiredEnvVars.forEach((envVar) => {
+  if (!process.env[envVar]) {
+    logger.error(`Variable d'environnement manquante: ${envVar}`);
     process.exit(1);
   }
 });
 
-// Configuration adaptive selon l'environnement
+// Pour DB_PASSWORD, on autorise une chaîne vide
+const dbPassword =
+  process.env.DB_PASSWORD !== undefined ? process.env.DB_PASSWORD : "";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 const sequelizeConfig = {
   host: process.env.DB_HOST,
-  dialect: "mysql",
+  dialect: process.env.DB_DIALECT || "mysql",
   logging: (msg) => logger.debug(msg), // Niveau debug pour les requêtes SQL
   define: {
     timestamps: true,
@@ -44,7 +50,7 @@ if (!isProduction) {
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  dbPassword,
   sequelizeConfig
 );
 
