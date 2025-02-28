@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      eventId: {
+      event_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -18,15 +18,15 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      imageUrl: {
+      image_url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

@@ -47,6 +47,16 @@ app.use("/api", routers);
 
 const PORT = process.env.PORT || 5000;
 
+// Additional logging for startup errors
+process.on("uncaughtException", (error) => {
+  logger.error("Uncaught Exception:", error);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  logger.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
+// Tester la connexion à la base de données et démarrer le serveur
 // Tester la connexion à la base de données et démarrer le serveur
 sequelize
   .authenticate()

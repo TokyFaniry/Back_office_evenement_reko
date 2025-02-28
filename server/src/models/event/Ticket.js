@@ -4,32 +4,32 @@ import sequelize from "../../config/database.js";
 const Ticket = sequelize.define(
   "Ticket",
   {
-    quantity: {
+    eventId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        min: {
-          args: 1,
-          msg: "La quantité doit être au moins 1",
-        },
+      field: "event_id", // passage en snake_case
+      references: {
+        model: "Events",
+        key: "id",
       },
+      onDelete: "CASCADE",
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      field: "category_id",
     },
     scanned: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
-      validate: {
-        isWithinQuantity(value) {
-          if (value > this.quantity) {
-            throw new Error("Le nombre de scans ne peut dépasser la quantité");
-          }
-        },
-      },
+      // Suppression de la validation asynchrone
     },
   },
   {
+    tableName: "tickets",
     timestamps: true,
-    indexes: [{ fields: ["eventId"] }, { fields: ["categoryId"] }],
+    freezeTableName: true,
   }
 );
 

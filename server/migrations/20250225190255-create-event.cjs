@@ -1,8 +1,10 @@
+// Migration Events (snake_case partout)
 "use strict";
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("Events", {
+      // Table name en snake_case
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,15 +19,16 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      totalSeats: {
+      total_seats: {
+        // Colonne en snake_case
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
@@ -33,6 +36,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Events");
+    await queryInterface.dropTable("events");
   },
 };

@@ -36,19 +36,15 @@ const Event = sequelize.define(
     totalSeats: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        min: {
-          args: 1,
-          msg: "Le nombre de places doit être au moins 1",
-        },
-      },
-      field: "totalSeats",
+      field: "total_seats", // Mapping snake_case
     },
   },
   {
+    tableName: "events", // Nom de table explicite
     timestamps: true,
-    createdAt: "created_at", // Correspond à la colonne renommée
-    updatedAt: "updated_at", // Force Sequelize à utiliser snake_case dans la DB
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    freezeTableName: true, // Force Sequelize à utiliser snake_case dans la DB
   }
 );
 

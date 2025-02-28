@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      eventId: {
+      event_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -18,7 +18,7 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      categoryId: {
+      category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -27,20 +27,16 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       scanned: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },

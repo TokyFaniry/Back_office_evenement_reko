@@ -4,8 +4,6 @@ import Ticket from "./Ticket.js";
 import TicketCategory from "./TicketCategory.js";
 import Image from "./Image.js";
 
-// Définition des relations
-
 // Un événement a plusieurs tickets
 Event.hasMany(Ticket, {
   foreignKey: "eventId",
@@ -19,7 +17,7 @@ Ticket.belongsTo(Event, {
   as: "event",
 });
 
-// Une catégorie de billet a plusieurs tickets
+// Une catégorie de ticket a plusieurs tickets
 TicketCategory.hasMany(Ticket, {
   foreignKey: "categoryId",
   as: "tickets",
@@ -32,12 +30,29 @@ Ticket.belongsTo(TicketCategory, {
   as: "category",
 });
 
+// Un événement a plusieurs catégories de tickets
+Event.hasMany(TicketCategory, {
+  foreignKey: "eventId",
+  as: "ticketCategories",
+  onDelete: "CASCADE",
+});
+
+// Une catégorie de ticket appartient à un événement
+TicketCategory.belongsTo(Event, {
+  foreignKey: "eventId",
+  as: "event",
+});
+
+// Un événement a une image
 Event.hasOne(Image, {
   foreignKey: "eventId",
   as: "image",
   onDelete: "CASCADE",
 });
-Image.belongsTo(Event, { foreignKey: "eventId", as: "event" });
+Image.belongsTo(Event, {
+  foreignKey: "eventId",
+  as: "event",
+});
 
 // Exportation des modèles et de l'instance Sequelize
 const db = {

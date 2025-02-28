@@ -9,16 +9,33 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      event_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Events",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      createdAt: {
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
