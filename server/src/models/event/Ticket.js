@@ -8,66 +8,53 @@ const Ticket = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       field: "event_id",
-      references: {
-        model: "Events",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      validate: { isInt: true },
     },
     categoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       field: "category_id",
-      references: {
-        model: "TicketCategories",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      validate: { isInt: true },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: { isEmail: true },
     },
     telephone: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: { is: /^\+?[1-9]\d{1,14}$/ },
     },
     placement: {
       type: DataTypes.STRING,
-      allowNull: true,
       defaultValue: "Libre",
     },
     serial_number: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING(16),
+      unique: true,
+      validate: { len: [12, 16] },
     },
     ticket_code: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING(20),
       unique: true,
     },
     scanned: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    indexes: [
+      { unique: true, fields: ["serial_number"] },
+      { unique: true, fields: ["ticket_code"] },
+      { fields: ["event_id"] },
+      { fields: ["category_id"] },
+    ],
   }
 );
-
-Ticket.associate = (models) => {
-  Ticket.belongsTo(models.Event, {
-    foreignKey: "event_id",
-    as: "event",
-  });
-  Ticket.belongsTo(models.TicketCategory, {
-    foreignKey: "category_id",
-    as: "category",
-  });
-};
 
 export default Ticket;

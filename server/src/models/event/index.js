@@ -35,6 +35,7 @@ Ticket.belongsTo(TicketCategory, {
   as: "category",
 });
 
+// Autres associations (Image par exemple)
 Event.hasOne(Image, {
   foreignKey: "event_id",
   as: "image",
