@@ -36,27 +36,37 @@ const Event = sequelize.define(
     totalSeats: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "total_seats", // Mapping snake_case
+      validate: {
+        min: {
+          args: 1,
+          msg: "Le nombre de places doit être au moins 1",
+        },
+      },
+      field: "total_seats",
     },
   },
   {
-    tableName: "events", // Nom de table explicite
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-    freezeTableName: true, // Force Sequelize à utiliser snake_case dans la DB
+    tableName: "Events",
   }
 );
 
 Event.associate = (models) => {
   Event.hasOne(models.Image, {
-    foreignKey: "eventId",
+    foreignKey: "event_id",
     as: "image",
     onDelete: "CASCADE",
   });
   Event.hasMany(models.Ticket, {
-    foreignKey: "eventId",
+    foreignKey: "event_id",
     as: "tickets",
+  });
+  Event.hasMany(models.TicketCategory, {
+    foreignKey: "event_id",
+    as: "ticketCategories",
+    onDelete: "CASCADE",
   });
 };
 

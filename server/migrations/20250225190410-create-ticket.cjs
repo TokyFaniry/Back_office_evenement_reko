@@ -27,6 +27,28 @@ module.exports = {
         },
         onDelete: "CASCADE",
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      telephone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      placement: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: "Libre",
+      },
+      serial_number: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      ticket_code: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       scanned: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -35,10 +57,12 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
     });
   },

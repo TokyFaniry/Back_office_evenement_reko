@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
-import Event from "./Event.js";
 
 const Image = sequelize.define(
   "Image",
@@ -8,26 +7,32 @@ const Image = sequelize.define(
     eventId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "event_id", // Correspondance correcte avec la colonne
+      field: "event_id",
+      references: {
+        model: "Events",
+        key: "id",
+      },
+      onDelete: "CASCADE",
     },
     imageUrl: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: "image_url",
+      field: "image_url", // en snake_case
     },
   },
   {
-    tableName: "images",
     timestamps: true,
-    freezeTableName: true,
-    createdAt: "created_at", // Correspond à la colonne renommée
+    createdAt: "created_at",
     updatedAt: "updated_at",
+    tableName: "Images",
   }
 );
+
 Image.associate = (models) => {
   Image.belongsTo(models.Event, {
-    foreignKey: "eventId",
+    foreignKey: "event_id",
     as: "event",
   });
 };
+
 export default Image;

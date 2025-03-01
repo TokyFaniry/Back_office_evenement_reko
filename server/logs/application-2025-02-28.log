@@ -101,3 +101,6 @@
 {"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-02-28T12:54:41.936Z"}
 {"level":"info","message":"Server running on port 3000","timestamp":"2025-02-28T12:54:41.961Z"}
 {"level":"info","message":"http://localhost:3000","timestamp":"2025-02-28T12:54:41.964Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-02-28T13:09:58.038Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-02-28T13:09:58.057Z"}
+{"level":"info","message":"http://localhost:3000","timestamp":"2025-02-28T13:09:58.060Z"}

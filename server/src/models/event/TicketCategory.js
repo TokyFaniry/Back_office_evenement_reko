@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../../config/database.js";
-import Event from "./Event.js";
 
 const TicketCategory = sequelize.define(
   "TicketCategory",
@@ -10,7 +9,6 @@ const TicketCategory = sequelize.define(
       allowNull: false,
       field: "event_id",
       references: {
-        // Ajoutez la référence manquante
         model: "Events",
         key: "id",
       },
@@ -41,11 +39,23 @@ const TicketCategory = sequelize.define(
   },
   {
     timestamps: true,
-    createdAt: "created_at", // Ajoutez ces lignes
+    createdAt: "created_at",
     updatedAt: "updated_at",
     freezeTableName: true,
     tableName: "TicketCategories",
   }
 );
+
+TicketCategory.associate = (models) => {
+  TicketCategory.belongsTo(models.Event, {
+    foreignKey: "event_id",
+    as: "event",
+  });
+  TicketCategory.hasMany(models.Ticket, {
+    foreignKey: "category_id",
+    as: "tickets",
+    onDelete: "CASCADE",
+  });
+};
 
 export default TicketCategory;

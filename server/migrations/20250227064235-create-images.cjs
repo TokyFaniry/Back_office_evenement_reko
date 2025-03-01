@@ -19,16 +19,19 @@ module.exports = {
         onDelete: "CASCADE",
       },
       image_url: {
+        // passage en snake_case
         type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
     });
   },
