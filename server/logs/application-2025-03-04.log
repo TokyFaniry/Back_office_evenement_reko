@@ -1,0 +1,5 @@
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-04T07:08:32.069Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-04T07:08:32.087Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-04T07:08:32.166Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2025-03-04T07:08:32.171Z"}
+{"level":"info","message":"http://localhost:3000","timestamp":"2025-03-04T07:08:32.172Z"}
