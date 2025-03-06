@@ -1,0 +1,27 @@
+.ContenuAjoutForm{
+    position: absolute;
+    top: 5.5rem;
+    left: 16rem;
+    width: 84% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+   
+}
+
+.ContenuAjoutForm h3{
+    font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 23px;
+  font-variation-settings:
+    "wdth" 100;
+    margin: 10px 10px;
+}
+
+.formulaires{
+    text-align: start !important;
+    width: 95% !important;
+}

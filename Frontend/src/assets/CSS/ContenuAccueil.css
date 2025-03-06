@@ -1,9 +1,84 @@
-.contenuAccueil{
+.contenuAccueil {
     position: absolute;
     top: 5.5rem;
-    left:16rem;
-    background-color: rgb(0, 187, 124);
-    width: 100%;
+    left: 16rem;
+    width: 84% !important;
     height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+.ajoutConcert {
+    height: 300px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 calc(25% - 10px);
+    max-width: calc(25% - 10px);
+}
+
+.ContenuAjoutConcert {
+    display: flex;
+    width: 70%;
+    height: 90%;
+    background-color: white;
+    border-radius: 8px;
+    
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.ContenuAjoutConcert::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(177, 177, 177, 0.5);
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out;
+    z-index: 1;
+}
+
+.ContenuAjoutConcert:hover::before {
+    background-color: rgba(155, 155, 155, 0.7);
+}
+
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
+
+.iconContainer:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 992px) {
+    .ajoutConcert {
+        flex: 1 1 calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 576px) {
+    .ajoutConcert {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
