@@ -1,0 +1,9 @@
+.contenuAccueil{
+    position: absolute;
+    top: 5.5rem;
+    left:16rem;
+    background-color: rgb(0, 187, 124);
+    width: 100%;
+    height: auto;
+}
+
