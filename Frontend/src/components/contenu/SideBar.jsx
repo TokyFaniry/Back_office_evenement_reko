@@ -1,83 +1,125 @@
-import "../../assets/CSS/SideBar.css";
 import { Link } from "react-router-dom";
+import { Home, Shirt, Music, Settings, ChevronDown, ShoppingBag, Package, Crown, Gem, Tag, X , PackageSearch} from "lucide-react";
+import { useState } from "react";
 import logo from "../../assets/images/logo.png";
 
-export function SideBar() {
-    return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary sidebar-container">
-            <Link to="#" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none sectionLogo">
-                
-                <div className="fs-4"><img src={logo} className="logo"/></div>
-            </Link>
-            <hr />
-            <ul className="nav nav-pills flex-column mb-auto">
-                <li className="nav-item">
-                    <Link to="#" className="nav-link active" aria-current="page">
-                        Evenements
-                    </Link>
-                </li>
-                <li>
-                    <Link to="#" className="nav-link link-body-emphasis">
-                        
-                        Billetterie
-                    </Link>
-                </li>
-                <li>
-                    <Link to="#" className="nav-link link-body-emphasis">
-                        
-                        Orders
-                    </Link>
-                </li>
-                <li>
-                    <Link to="#" className="nav-link link-body-emphasis">
-                       
-                        Products
-                    </Link>
-                </li>
-                <li>
-                    <Link to="#" className="nav-link link-body-emphasis">
-                        
-                        Customers
-                    </Link>
-                </li>
-            </ul>
-            <hr />
-            <div className="dropdown">
-                <Link
-                    to="#"
-                    className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                  
-                    <strong>options</strong>
-                </Link>
-                <ul className="dropdown-menu text-small shadow ">
-                    <li>
-                        <Link className="dropdown-item" to="#">
-                            New project...
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="dropdown-item" to="#">
-                            Settings
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="dropdown-item" to="#">
-                            Profile
-                        </Link>
-                    </li>
-                    <li>
-                        <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                        <Link className="dropdown-item" to="#">
-                            Sign out
-                        </Link>
-                    </li>
-                </ul>
+export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
+  const [isOpen, setIsOpen] = useState(false);
+  // Récupérer le rôle de l'utilisateur depuis le localStorage
+  const userRole = localStorage.getItem("userRole");
+
+  return (
+      <div
+        className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg p-6 z-40 overflow-y-auto transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      > 
+      {/* Bouton de fermeture (croix) en mode mobile */}
+      <button
+        className="absolute top-4 right-4 lg:hidden"
+        onClick={toggleSidebar}
+      >
+        <X size={24} />
+      </button>
+
+      {/* Logo centré */}
+      <div className="flex justify-center items-center mb-8">
+        <img src={logo} alt="Logo" className="w-20 h-20" />
+      </div>
+
+      {/* Navigation */}
+      <nav className="space-y-2">
+        <Link
+          to="/"
+          className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <Home size={20} />
+          <span>Accueil</span>
+        </Link>
+
+        <Link
+        to="/stock"
+        className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+        <PackageSearch size={20}/>
+        <span>Stock</span>
+        </Link>
+
+        {/* Menu déroulant "Ajouter" */}
+        <div>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center justify-between w-full p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <div className="flex items-center space-x-3">
+              <Package size={20} />
+              <span>Produit</span>
             </div>
+            <ChevronDown size={20} className={`${isOpen ? "rotate-180" : ""} transition-transform`} />
+          </button>
+          {isOpen && (
+            <div className="pl-6 mt-1 space-y-2">
+              <Link to="/teeshirt" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Shirt size={16} />
+                <span>Teeshirt</span>
+              </Link>
+              <Link to="/album" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Music size={16} />
+                <span>Album</span>
+              </Link>
+              <Link to="/carnet" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Package size={16} />
+                <span>Carnet</span>
+              </Link>
+              <Link to="/tote" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <ShoppingBag size={16} />
+                <span>Tote Bag</span>
+              </Link>
+              <Link to="/casquette" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Crown size={16} />
+                <span>Casquette</span>
+              </Link>
+              <Link to="/hoodie" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Shirt size={16} />
+                <span>Hoodie</span>
+              </Link>
+              <Link to="/coussin" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Package size={16} />
+                <span>Coussin</span>
+              </Link>
+              <Link to="/bracelet" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Gem size={16} />
+                <span>Bracelet</span>
+              </Link>
+              <Link to="/autocollant" className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                <Tag size={16} />
+                <span>Autocollant</span>
+              </Link>
+            </div>
+          )}
         </div>
-    );
+
+        <Link
+          to="/settings"
+          className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+        >
+          <Settings size={20} />
+          <span>Paramètres</span>
+        </Link>
+
+        {/* Section Administration pour SuperAdmin */}
+        {userRole === "superadmin" && (
+          <div className="mt-4 border-t pt-4">
+            <h3 className="text-gray-700 font-semibold mb-2">Administration</h3>
+            <Link
+              to="/admin-list"
+              className="flex items-center space-x-3 p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <span>Liste des Admins</span>
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
 }
