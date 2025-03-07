@@ -38,3 +38,10 @@
 .enrbtn{
     width: 95% !important;
 }
+
+.back-arrow{
+    position: absolute;
+    top: 15px;
+    right: 40px;
+    cursor: pointer;
+}
