@@ -1,9 +1,11 @@
-// src/components/AjoutForm/AjoutForm.jsx
 import { useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import "../../assets/CSS/AjoutForm.css";
 
 export function AjoutForm() {
+  const [titre, setTitre] = useState("");
+  const [typeEvenement, setTypeEvenement] = useState("Concert");
+  const [autreType, setAutreType] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -33,13 +35,26 @@ export function AjoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!date || !description || !location || !totalSeats || !poster) {
+    if (
+      !titre ||
+      !date ||
+      !description ||
+      !location ||
+      !totalSeats ||
+      !poster ||
+      (typeEvenement === "Autres" && !autreType)
+    ) {
       setMessage("Tous les champs sont obligatoires");
       return;
     }
 
     // Création du FormData pour envoyer le fichier et les autres données
     const formData = new FormData();
+    formData.append("title", titre);
+    formData.append(
+      "type",
+      typeEvenement === "Autres" ? autreType : typeEvenement
+    );
     formData.append("date", date);
     formData.append("description", description);
     formData.append("location", location);
@@ -57,6 +72,9 @@ export function AjoutForm() {
       if (response.data.success) {
         setMessage("Événement créé avec succès!");
         // Réinitialiser le formulaire
+        setTitre("");
+        setTypeEvenement("Concert");
+        setAutreType("");
         setDate("");
         setDescription("");
         setLocation("");
@@ -72,6 +90,47 @@ export function AjoutForm() {
     <div className="ContenuAjoutForm">
       <h3>Ajouter un évènement</h3>
       <form onSubmit={handleSubmit} className="formulaires">
+        <div className="mb-3">
+          <label htmlFor="titreEvenement" className="form-label">
+            Titre de l'évènement
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="titreEvenement"
+            value={titre}
+            onChange={(e) => setTitre(e.target.value)}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="typeEvenement" className="form-label">
+            Type
+          </label>
+          <select
+            className="form-select"
+            id="typeEvenement"
+            value={typeEvenement}
+            onChange={(e) => setTypeEvenement(e.target.value)}
+          >
+            <option value="Concert">Concert</option>
+            <option value="Cabaret">Cabaret</option>
+            <option value="Autres">Autres</option>
+          </select>
+        </div>
+        {typeEvenement === "Autres" && (
+          <div className="mb-3">
+            <label htmlFor="autreType" className="form-label">
+              Autre type
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="autreType"
+              value={autreType}
+              onChange={(e) => setAutreType(e.target.value)}
+            />
+          </div>
+        )}
         <div className="mb-3">
           <label htmlFor="dateEvenement" className="form-label">
             Date
