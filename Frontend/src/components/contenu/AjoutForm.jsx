@@ -1,6 +1,9 @@
+import { useState } from "react";
 import "../../assets/CSS/AjoutForm.css";
 
 export function AjoutForm() {
+  const [typeEvenement, setTypeEvenement] = useState("Concert");
+
   return (
     <div className="ContenuAjoutForm">
       <h3>Ajouter un évènement</h3>
@@ -15,12 +18,24 @@ export function AjoutForm() {
 
         <div className="mb-3">
           <label htmlFor="typeEvenement" className="form-label">Type</label>
-          <select className="form-select" id="typeEvenement">
-            <option selected>Concert</option>
-            <option value="1">Cabaret</option>
-            <option value="2">Autres</option>
+          <select
+            className="form-select"
+            id="typeEvenement"
+            value={typeEvenement}
+            onChange={(e) => setTypeEvenement(e.target.value)}
+          >
+            <option value="Concert">Concert</option>
+            <option value="Cabaret">Cabaret</option>
+            <option value="Autres">Autres</option>
           </select>
         </div>
+
+        {typeEvenement === "Autres" && (
+          <div className="mb-3">
+            <label htmlFor="autreType" className="form-label">Autre type</label>
+            <input type="text" className="form-control" id="autreType" />
+          </div>
+        )}
 
         <div className="mb-3">
           <label htmlFor="dateEvenement" className="form-label">Date</label>
@@ -40,10 +55,11 @@ export function AjoutForm() {
         </div>
       </div>
 
-        <div class="mb-3 enr ">
-            <button class="btn btn-primary enrbtn " type="submit">Enregistrer</button>
-        </div>
-
+      <div className="mb-3 enr">
+        <button className="btn btn-primary enrbtn" type="submit">
+          Enregistrer
+        </button>
+      </div>
     </div>
   );
 }
