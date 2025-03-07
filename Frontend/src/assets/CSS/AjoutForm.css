@@ -44,4 +44,9 @@
     top: 15px;
     right: 40px;
     cursor: pointer;
+    color: #696969;
+}
+
+.back-arrow:hover{
+    color: #000000;
 }
