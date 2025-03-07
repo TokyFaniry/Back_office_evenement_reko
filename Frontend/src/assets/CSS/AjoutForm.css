@@ -25,3 +25,16 @@
     text-align: start !important;
     width: 95% !important;
 }
+
+.enr{
+    position: relative;
+    top: 10px;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.enrbtn{
+    width: 95% !important;
+}
