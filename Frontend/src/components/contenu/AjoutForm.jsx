@@ -3,6 +3,20 @@ import "../../assets/CSS/AjoutForm.css";
 
 export function AjoutForm() {
   const [typeEvenement, setTypeEvenement] = useState("Concert");
+  const [fileError, setFileError] = useState("");
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const validExtensions = ["image/png", "image/jpeg", "image/jpg"];
+      if (!validExtensions.includes(file.type)) {
+        setFileError("Seules les images au format PNG, JPEG ou JPG sont autorisées.");
+        e.target.value = ""; // Réinitialiser l'input file
+      } else {
+        setFileError("");
+      }
+    }
+  };
 
   return (
     <div className="ContenuAjoutForm">
@@ -51,7 +65,14 @@ export function AjoutForm() {
 
         <div className="mb-3">
           <label htmlFor="afficheEvenement" className="form-label">Affiche de l'évènement</label>
-          <input type="file" className="form-control" id="afficheEvenement" />
+          <input 
+            type="file" 
+            className="form-control" 
+            id="afficheEvenement" 
+            accept="image/png, image/jpeg, image/jpg" 
+            onChange={handleFileChange} 
+          />
+          {fileError && <p className="text-danger">{fileError}</p>}
         </div>
       </div>
 
