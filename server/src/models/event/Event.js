@@ -44,6 +44,32 @@ const Event = sequelize.define(
       },
       field: "total_seats",
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Le titre est obligatoire",
+        },
+        len: {
+          args: [5, 255],
+          msg: "Le titre doit contenir entre 5 et 255 caractères",
+        },
+      },
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Le type est obligatoire",
+        },
+        isIn: {
+          args: [["Autres", "Cabaret", "Concert"]],
+          msg: "Le type doit être l'un des suivants : Autres, Cabaret, Concert",
+        },
+      },
+    },
   },
   {
     timestamps: true,

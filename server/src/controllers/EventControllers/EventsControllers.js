@@ -11,14 +11,22 @@ export const createEvent = async (req, res) => {
   const transaction = await sequelize.transaction();
 
   try {
-    const { date, description, location, totalSeats } = req.body;
-    if (!req.file || !date || !description || !location || !totalSeats) {
+    const { date, description, location, totalSeats, type, title } = req.body;
+    if (
+      !req.file ||
+      !date ||
+      !description ||
+      !location ||
+      !totalSeats ||
+      !type ||
+      !title
+    ) {
       await transaction.rollback();
       return res.status(400).json({ message: "Tous les champs sont requis" });
     }
 
     const newEvent = await Event.create(
-      { date, description, location, totalSeats },
+      { date, description, location, totalSeats, type, title },
       { transaction }
     );
 
