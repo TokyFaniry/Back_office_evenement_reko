@@ -32,7 +32,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(
   "/uploads",
-  express.static(path.join(__dirname, "..", "public", "uploads"))
+  express.static(path.join(process.cwd(), "..", "public", "uploads"))
 );
 
 // Nouveau middleware pour servir les images des événements depuis "public/events"
@@ -53,7 +53,7 @@ app.use(
 // Routes pour la gestion des événements
 app.use("/api", routers);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Gestion des erreurs de démarrage
 process.on("uncaughtException", (error) => {
