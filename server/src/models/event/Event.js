@@ -60,15 +60,6 @@ const Event = sequelize.define(
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "Le type est obligatoire",
-        },
-        isIn: {
-          args: [["Autres", "Cabaret", "Concert"]],
-          msg: "Le type doit être l'un des suivants : Autres, Cabaret, Concert",
-        },
-      },
     },
   },
   {

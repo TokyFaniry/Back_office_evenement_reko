@@ -32,14 +32,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(
   "/uploads",
-  express.static(path.join(process.cwd(), "..", "public", "uploads"))
+  express.static(path.join(process.cwd(), "public", "uploads"))
 );
 
-// Nouveau middleware pour servir les images des événements depuis "public/events"
-app.use(
-  "/events",
-  express.static(path.join(__dirname, "..", "public", "events"))
-);
+// Middleware pour servir les images des événements depuis "public/events"
+app.use("/events", express.static(path.join(__dirname, "public", "events")));
 
 // Configuration de la session pour Passport
 app.use(
@@ -53,7 +50,8 @@ app.use(
 // Routes pour la gestion des événements
 app.use("/api", routers);
 
-const PORT = process.env.PORT || 3000;
+// Utilisation du port 3001 (ou celui défini dans la variable d'environnement PORT)
+const PORT = process.env.PORT || 3001;
 
 // Gestion des erreurs de démarrage
 process.on("uncaughtException", (error) => {
@@ -106,7 +104,7 @@ async function runMigrations() {
   }
 }
 
-// Démarrage du serveur : vérifier/créer la DB, exécuter les migrations, puis lancer le serveur
+// Démarrage du serveur
 (async () => {
   await createDatabaseIfNotExists();
   try {
