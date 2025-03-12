@@ -63,3 +63,34 @@
 {"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T09:15:47.283Z"}
 {"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T09:15:47.300Z"}
 {"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T09:15:47.302Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T13:29:48.759Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T13:29:48.819Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T13:29:48.916Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T13:29:48.937Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T13:29:48.941Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T13:40:48.089Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T13:40:48.152Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T13:40:48.290Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T13:40:48.301Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T13:40:48.305Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T14:01:15.568Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T14:01:15.613Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:01:15.695Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:01:15.709Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:01:15.712Z"}
+{"date":"Wed Mar 12 2025 17:02:41 GMT+0300 (East Africa Time)","error":{},"level":"error","message":"unhandledRejection: Transaction cannot be rolled back because it has been finished with state: commit\nError: Transaction cannot be rolled back because it has been finished with state: commit\n    at Transaction.rollback (D:\\Projet Reko\\Back_office_evenement_reko\\server\\node_modules\\sequelize\\lib\\transaction.js:59:13)\n    at createEvent (file:///D:/Projet%20Reko/Back_office_evenement_reko/server/src/controllers/EventControllers/EventsControllers.js:59:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","os":{"loadavg":[0,0,0],"uptime":1133722.968},"process":{"argv":["C:\\Program Files\\nodejs\\node.exe","D:\\Projet Reko\\Back_office_evenement_reko\\server\\src\\server.js"],"cwd":"D:\\Projet Reko\\Back_office_evenement_reko\\server","execPath":"C:\\Program Files\\nodejs\\node.exe","gid":null,"memoryUsage":{"arrayBuffers":67564,"external":3811815,"heapTotal":33038336,"heapUsed":30241704,"rss":81330176},"pid":35860,"uid":null,"version":"v23.7.0"},"rejection":true,"stack":"Error: Transaction cannot be rolled back because it has been finished with state: commit\n    at Transaction.rollback (D:\\Projet Reko\\Back_office_evenement_reko\\server\\node_modules\\sequelize\\lib\\transaction.js:59:13)\n    at createEvent (file:///D:/Projet%20Reko/Back_office_evenement_reko/server/src/controllers/EventControllers/EventsControllers.js:59:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)","timestamp":"2025-03-12T14:02:41.579Z","trace":[{"column":13,"file":"D:\\Projet Reko\\Back_office_evenement_reko\\server\\node_modules\\sequelize\\lib\\transaction.js","function":"Transaction.rollback","line":59,"method":"rollback","native":false},{"column":23,"file":"file:///D:/Projet%20Reko/Back_office_evenement_reko/server/src/controllers/EventControllers/EventsControllers.js","function":"createEvent","line":59,"method":null,"native":false},{"column":5,"file":"node:internal/process/task_queues","function":"process.processTicksAndRejections","line":105,"method":"processTicksAndRejections","native":false}]}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T14:04:51.292Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T14:04:51.349Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:04:51.443Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:04:51.454Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:04:51.458Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T14:07:20.122Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T14:07:20.162Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:07:20.223Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:07:20.230Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:07:20.233Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T14:07:42.757Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T14:07:42.800Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:07:42.877Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:07:42.884Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:07:42.886Z"}

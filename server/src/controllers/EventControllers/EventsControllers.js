@@ -1,17 +1,22 @@
 // src/controllers/EventControllers/EventsControllers.js
+
 import path from "path";
 import db from "../../models/event/index.js";
 import sequelize from "../../config/database.js";
 import { deleteFile, UPLOAD_PATH } from "./fileUtils.js"; // Supposons que deleteFile soit extrait dans fileUtils.js
+import { io } from "../../config/socket.js"; // Import de l'instance Socket.IO
 
 const { Event, Image, Ticket, TicketCategory } = db;
 
-// 📌 Créer un événement avec une image
+// ----------------------------------------------------------------------------
+// 📌 Créer un événement avec une image et émission d'un événement Socket.IO
+// ----------------------------------------------------------------------------
 export const createEvent = async (req, res) => {
   const transaction = await sequelize.transaction();
 
   try {
     const { date, description, location, totalSeats, type, title } = req.body;
+
     if (
       !req.file ||
       !date ||
@@ -21,7 +26,9 @@ export const createEvent = async (req, res) => {
       !type ||
       !title
     ) {
-      await transaction.rollback();
+      if (!transaction.finished) {
+        await transaction.rollback();
+      }
       return res.status(400).json({ message: "Tous les champs sont requis" });
     }
 
@@ -39,14 +46,26 @@ export const createEvent = async (req, res) => {
       { transaction }
     );
 
+    // Finaliser la transaction
     await transaction.commit();
+
+    // Récupérer l'événement complet avec son image associée
+    const completeEvent = await Event.findByPk(newEvent.id, {
+      include: [{ model: Image, as: "image", attributes: ["imageUrl"] }],
+    });
+
+    // Émettre l'événement "new_event" pour notifier le frontoffice
+    io.emit("new_event", completeEvent);
+
     res.status(201).json({
       success: true,
       message: "Événement créé avec succès",
-      event: newEvent,
+      event: completeEvent,
     });
   } catch (error) {
-    await transaction.rollback();
+    if (!transaction.finished) {
+      await transaction.rollback();
+    }
     if (req.file) {
       try {
         await deleteFile(req.file.filename);
@@ -66,7 +85,9 @@ export const createEvent = async (req, res) => {
   }
 };
 
+// ----------------------------------------------------------------------------
 // 📌 Obtenir tous les événements
+// ----------------------------------------------------------------------------
 export const getAllEvents = async (req, res) => {
   try {
     const events = await Event.findAll({
@@ -79,7 +100,9 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
+// ----------------------------------------------------------------------------
 // 📌 Obtenir un événement par ID
+// ----------------------------------------------------------------------------
 export const getEventById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -105,18 +128,22 @@ export const getEventById = async (req, res) => {
   }
 };
 
-// 📌 Mettre à jour un événement avec image
+// ----------------------------------------------------------------------------
+// 📌 Mettre à jour un événement avec image et émission d'un événement Socket.IO
+// ----------------------------------------------------------------------------
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
   const { date, description, location, totalSeats } = req.body;
-  // Construction de l'URL de l'image de la même manière que lors de la création
+  // URL de la nouvelle image (si envoyée)
   const newImageUrl = req.file ? `/uploads/events/${req.file.filename}` : null;
 
   const transaction = await sequelize.transaction();
   try {
     const event = await Event.findByPk(id, { transaction });
     if (!event) {
-      await transaction.rollback();
+      if (!transaction.finished) {
+        await transaction.rollback();
+      }
       return res.status(404).json({ message: "Événement non trouvé" });
     }
 
@@ -132,7 +159,7 @@ export const updateEvent = async (req, res) => {
       });
 
       if (existingImage) {
-        // Supprimer l'ancienne image
+        // Supprimer l'ancienne image du système de fichiers
         await deleteFile(existingImage.imageUrl);
         await existingImage.update({ imageUrl: newImageUrl }, { transaction });
       } else {
@@ -144,14 +171,28 @@ export const updateEvent = async (req, res) => {
     }
 
     await transaction.commit();
-    res.status(200).json({ message: "Événement mis à jour", event });
+
+    const updatedEvent = await Event.findByPk(id, {
+      include: [{ model: Image, as: "image", attributes: ["imageUrl"] }],
+    });
+
+    // Émettre l'événement "update_event" pour notifier le frontoffice
+    io.emit("update_event", updatedEvent);
+
+    res
+      .status(200)
+      .json({ message: "Événement mis à jour", event: updatedEvent });
   } catch (error) {
-    await transaction.rollback();
+    if (!transaction.finished) {
+      await transaction.rollback();
+    }
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };
 
-// 📌 Supprimer un événement et son image
+// ----------------------------------------------------------------------------
+// 📌 Supprimer un événement et son image, et émission d'un événement Socket.IO
+// ----------------------------------------------------------------------------
 export const deleteEvent = async (req, res) => {
   const { id } = req.params;
   const transaction = await sequelize.transaction();
@@ -159,7 +200,9 @@ export const deleteEvent = async (req, res) => {
   try {
     const event = await Event.findByPk(id, { transaction });
     if (!event) {
-      await transaction.rollback();
+      if (!transaction.finished) {
+        await transaction.rollback();
+      }
       return res.status(404).json({ message: "Événement non trouvé" });
     }
 
@@ -171,9 +214,15 @@ export const deleteEvent = async (req, res) => {
 
     await event.destroy({ transaction });
     await transaction.commit();
+
+    // Émettre l'événement "delete_event" avec l'ID de l'événement supprimé
+    io.emit("delete_event", { id });
+
     res.status(200).json({ message: "Événement supprimé avec succès" });
   } catch (error) {
-    await transaction.rollback();
+    if (!transaction.finished) {
+      await transaction.rollback();
+    }
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };

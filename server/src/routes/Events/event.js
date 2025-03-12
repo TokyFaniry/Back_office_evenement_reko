@@ -1,4 +1,3 @@
-// src/routes/Events/event.js
 import express from "express";
 import upload from "../../middleware/upload.js";
 import {

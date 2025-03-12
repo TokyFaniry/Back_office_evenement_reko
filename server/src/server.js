@@ -9,6 +9,8 @@ import sequelize from "./config/database.js";
 import routers from "./routes/index.js";
 import mysql from "mysql2/promise";
 import { Umzug, SequelizeStorage } from "umzug";
+import http from "http";
+import { initSocket } from "./config/socket.js"; // Import de l'initialisation Socket.IO
 
 dotenv.config();
 
@@ -74,7 +76,9 @@ async function createDatabaseIfNotExists() {
       password: process.env.DB_PASSWORD || "",
     });
     // Créer la base de données si elle n'existe pas
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`);
+    await connection.query(
+      `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`
+    );
     await connection.end();
     logger.info(`Base de données "${process.env.DB_NAME}" vérifiée/créée.`);
   } catch (error) {
@@ -109,7 +113,14 @@ async function runMigrations() {
     await sequelize.authenticate();
     logger.info("Connexion à la base de données établie avec succès.");
     await runMigrations();
-    app.listen(PORT, "0.0.0.0", () => {
+
+    // Création du serveur HTTP avec Express
+    const server = http.createServer(app);
+
+    // Initialisation de Socket.IO sur le serveur HTTP
+    initSocket(server);
+
+    server.listen(PORT, "0.0.0.0", () => {
       logger.info(`Server running on port ${PORT}`);
       logger.info(`http://localhost:${PORT}`);
     });
