@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Dans un environnement Vite, vous pouvez utiliser import.meta.env.VITE_BACKEND_URL.
 // Ici, nous définissons explicitement la baseURL pour pointer vers le port 3000 et inclure le préfixe /api.
-const baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/api";
+const baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api";
 
 const axiosInstance = axios.create({
   baseURL,

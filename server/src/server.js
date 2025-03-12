@@ -14,10 +14,10 @@ dotenv.config();
 
 const app = express();
 
-// Configuration de CORS
+// Configuration de CORS pour autoriser les deux origins
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     exposedHeaders: ["Authorization"],
@@ -29,14 +29,14 @@ app.use(express.json());
 
 // Configuration pour servir les fichiers statiques depuis "public/uploads"
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _dirname = path.dirname(__filename);
 app.use(
   "/uploads",
   express.static(path.join(process.cwd(), "public", "uploads"))
 );
 
 // Middleware pour servir les images des événements depuis "public/events"
-app.use("/events", express.static(path.join(__dirname, "public", "events")));
+app.use("/events", express.static(path.join(_dirname, "public", "events")));
 
 // Configuration de la session pour Passport
 app.use(
@@ -74,9 +74,7 @@ async function createDatabaseIfNotExists() {
       password: process.env.DB_PASSWORD || "",
     });
     // Créer la base de données si elle n'existe pas
-    await connection.query(
-      `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`
-    );
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\`;`);
     await connection.end();
     logger.info(`Base de données "${process.env.DB_NAME}" vérifiée/créée.`);
   } catch (error) {
