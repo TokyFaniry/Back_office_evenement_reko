@@ -1,12 +1,13 @@
 "use strict";
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (context) => {
+    const { queryInterface, Sequelize } = context; // Récupère queryInterface et Sequelize
     await queryInterface.createTable("Tickets", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
       },
       event_id: {
@@ -17,6 +18,7 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       category_id: {
         type: Sequelize.INTEGER,
@@ -26,6 +28,7 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       email: {
         type: Sequelize.STRING,
@@ -47,7 +50,7 @@ module.exports = {
       ticket_code: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true, // L'unicité crée automatiquement un index unique
       },
       scanned: {
         type: Sequelize.INTEGER,
@@ -57,17 +60,18 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (context) => {
+    const { queryInterface } = context;
     await queryInterface.dropTable("Tickets");
   },
 };

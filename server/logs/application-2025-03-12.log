@@ -94,3 +94,8 @@
 {"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:07:42.877Z"}
 {"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:07:42.884Z"}
 {"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:07:42.886Z"}
+{"level":"info","message":"Base de données \"rekoevents\" vérifiée/créée.","timestamp":"2025-03-12T14:10:01.233Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-12T14:10:01.271Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-12T14:10:01.329Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-12T14:10:01.344Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-12T14:10:01.347Z"}

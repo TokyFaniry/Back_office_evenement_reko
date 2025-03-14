@@ -1,12 +1,13 @@
 "use strict";
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (context) => {
+    const { queryInterface, Sequelize } = context; // Récupère queryInterface et Sequelize
     await queryInterface.createTable("Images", {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER,
       },
       event_id: {
@@ -17,26 +18,27 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       image_url: {
-        // passage en snake_case
         type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (context) => {
+    const { queryInterface } = context;
     await queryInterface.dropTable("Images");
   },
 };

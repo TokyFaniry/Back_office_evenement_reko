@@ -1,7 +1,8 @@
 "use strict";
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (context) => {
+    const { queryInterface, Sequelize } = context; // Récupération du contexte injecté
     await queryInterface.createTable("TicketCategories", {
       id: {
         allowNull: false,
@@ -17,6 +18,7 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       name: {
         type: Sequelize.STRING,
@@ -34,17 +36,18 @@ module.exports = {
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (context) => {
+    const { queryInterface } = context;
     await queryInterface.dropTable("TicketCategories");
   },
 };
