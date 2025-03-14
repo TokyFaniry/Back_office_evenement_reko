@@ -54,6 +54,15 @@ const Ticket = sequelize.define(
       { fields: ["event_id"] },
       { fields: ["category_id"] },
     ],
+    hooks: {
+      beforeCreate: (ticket) => {
+        // Normalisation de l’email et des autres champs au besoin
+        ticket.email = ticket.email.toLowerCase().trim();
+      },
+      beforeUpdate: (ticket) => {
+        ticket.email = ticket.email.toLowerCase().trim();
+      },
+    },
   }
 );
 

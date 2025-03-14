@@ -20,9 +20,7 @@ export function AjoutForm() {
     if (file) {
       const validExtensions = ["image/png", "image/jpeg", "image/jpg"];
       if (!validExtensions.includes(file.type)) {
-        setFileError(
-          "Seules les images au format PNG, JPEG ou JPG sont autorisées."
-        );
+        setFileError("Seules les images PNG, JPEG ou JPG sont autorisées.");
         e.target.value = "";
       } else {
         setFileError("");
@@ -48,7 +46,6 @@ export function AjoutForm() {
       return;
     }
 
-    // Création du FormData pour envoyer le fichier et les autres données
     const formData = new FormData();
     formData.append("title", titre);
     formData.append(
@@ -68,10 +65,9 @@ export function AjoutForm() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-
       if (response.data.success) {
         setMessage("Événement créé avec succès!");
-        // Réinitialiser le formulaire
+        // Réinitialisation du formulaire
         setTitre("");
         setTypeEvenement("Concert");
         setAutreType("");
@@ -87,118 +83,101 @@ export function AjoutForm() {
   };
 
   return (
-    <div className="ContenuAjoutForm">
-      <h3>Ajouter un évènement</h3>
-      <form onSubmit={handleSubmit} className="formulaires">
-        <div className="mb-3">
-          <label htmlFor="titreEvenement" className="form-label">
-            Titre de l'évènement
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="titreEvenement"
-            value={titre}
-            onChange={(e) => setTitre(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="typeEvenement" className="form-label">
-            Type
-          </label>
-          <select
-            className="form-select"
-            id="typeEvenement"
-            value={typeEvenement}
-            onChange={(e) => setTypeEvenement(e.target.value)}
-          >
-            <option value="Concert">Concert</option>
-            <option value="Cabaret">Cabaret</option>
-            <option value="Autres">Autres</option>
-          </select>
-        </div>
-        {typeEvenement === "Autres" && (
-          <div className="mb-3">
-            <label htmlFor="autreType" className="form-label">
-              Autre type
-            </label>
+    <div className="page-wrapper">
+      <div className="ajout-container">
+        <h3>Ajouter un évènement</h3>
+        <form onSubmit={handleSubmit} className="formulaire">
+          <div className="form-group">
+            <label htmlFor="titreEvenement">Titre de l'évènement</label>
             <input
               type="text"
-              className="form-control"
-              id="autreType"
-              value={autreType}
-              onChange={(e) => setAutreType(e.target.value)}
+              id="titreEvenement"
+              placeholder="Entrez le titre de l'évènement"
+              value={titre}
+              onChange={(e) => setTitre(e.target.value)}
             />
           </div>
-        )}
-        <div className="mb-3">
-          <label htmlFor="dateEvenement" className="form-label">
-            Date
-          </label>
-          <input
-            type="date"
-            className="form-control"
-            id="dateEvenement"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="descriptionEvenement" className="form-label">
-            Description
-          </label>
-          <textarea
-            className="form-control"
-            id="descriptionEvenement"
-            rows="3"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></textarea>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="locationEvenement" className="form-label">
-            Lieu
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="locationEvenement"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="totalSeatsEvenement" className="form-label">
-            Nombre de places
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="totalSeatsEvenement"
-            value={totalSeats}
-            onChange={(e) => setTotalSeats(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="afficheEvenement" className="form-label">
-            Affiche de l'évènement
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="afficheEvenement"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={handleFileChange}
-          />
-          {fileError && <p className="text-danger">{fileError}</p>}
-        </div>
-        <div className="mb-3 enr">
-          <button className="btn btn-primary enrbtn" type="submit">
-            Enregistrer
-          </button>
-        </div>
-      </form>
-      {message && <p>{message}</p>}
+          <div className="form-group">
+            <label htmlFor="typeEvenement">Type</label>
+            <select
+              id="typeEvenement"
+              value={typeEvenement}
+              onChange={(e) => setTypeEvenement(e.target.value)}
+            >
+              <option value="Concert">Concert</option>
+              <option value="Cabaret">Cabaret</option>
+              <option value="Autres">Autres</option>
+            </select>
+          </div>
+          {typeEvenement === "Autres" && (
+            <div className="form-group">
+              <label htmlFor="autreType">Autre type</label>
+              <input
+                type="text"
+                id="autreType"
+                placeholder="Précisez le type"
+                value={autreType}
+                onChange={(e) => setAutreType(e.target.value)}
+              />
+            </div>
+          )}
+          <div className="form-group">
+            <label htmlFor="dateEvenement">Date</label>
+            <input
+              type="date"
+              id="dateEvenement"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="descriptionEvenement">Description</label>
+            <textarea
+              id="descriptionEvenement"
+              placeholder="Décrivez l'évènement"
+              rows="3"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
+          <div className="form-group">
+            <label htmlFor="locationEvenement">Lieu</label>
+            <input
+              type="text"
+              id="locationEvenement"
+              placeholder="Entrez le lieu de l'évènement"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="totalSeatsEvenement">Nombre de places</label>
+            <input
+              type="number"
+              id="totalSeatsEvenement"
+              placeholder="Nombre total de places"
+              value={totalSeats}
+              onChange={(e) => setTotalSeats(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="afficheEvenement">Affiche de l'évènement</label>
+            <input
+              type="file"
+              id="afficheEvenement"
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleFileChange}
+            />
+            {fileError && <p className="error">{fileError}</p>}
+          </div>
+          <div className="form-group submit-group">
+            <button type="submit" className="submit-btn">
+              Enregistrer
+            </button>
+          </div>
+        </form>
+        {message && <p className="message">{message}</p>}
+      </div>
     </div>
   );
 }

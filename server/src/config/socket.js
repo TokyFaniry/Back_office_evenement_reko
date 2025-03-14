@@ -38,4 +38,5 @@ export const getSocketIO = () => {
   return io;
 };
 
-export { io };
+// IMPORTANT : Évite d'exporter directement `io` pour éviter les accès prématurés à une instance potentiellement non initialisée.
+// export { io };

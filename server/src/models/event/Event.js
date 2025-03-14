@@ -8,9 +8,11 @@ const Event = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isAfter: {
-          args: new Date().toISOString(),
-          msg: "La date doit être dans le futur",
+        // Validation personnalisée garantissant que la date soit future
+        isFutureDate(value) {
+          if (new Date(value) <= new Date()) {
+            throw new Error("La date doit être dans le futur");
+          }
         },
       },
     },
@@ -38,7 +40,7 @@ const Event = sequelize.define(
       allowNull: false,
       validate: {
         min: {
-          args: 1,
+          args: [1],
           msg: "Le nombre de places doit être au moins 1",
         },
       },
@@ -58,7 +60,7 @@ const Event = sequelize.define(
       },
     },
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING, // On conserve le type comme STRING
       allowNull: false,
     },
   },
@@ -67,9 +69,24 @@ const Event = sequelize.define(
     createdAt: "created_at",
     updatedAt: "updated_at",
     tableName: "Events",
+    hooks: {
+      beforeCreate: (event) => {
+        if (event.title) event.title = event.title.trim();
+        if (event.description) event.description = event.description.trim();
+        if (event.location) event.location = event.location.trim();
+        if (event.type) event.type = event.type.trim();
+      },
+      beforeUpdate: (event) => {
+        if (event.title) event.title = event.title.trim();
+        if (event.description) event.description = event.description.trim();
+        if (event.location) event.location = event.location.trim();
+        if (event.type) event.type = event.type.trim();
+      },
+    },
   }
 );
 
+// Associations définies dans l'index ou lors de l'initialisation globale des modèles
 Event.associate = (models) => {
   Event.hasOne(models.Image, {
     foreignKey: "event_id",

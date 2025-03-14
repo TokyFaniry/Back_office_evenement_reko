@@ -18,18 +18,21 @@ const UPLOAD_PATH = path.join(
   "events"
 );
 
+// Création du dossier d'uploads s'il n'existe pas
 if (!fs.existsSync(UPLOAD_PATH)) {
   fs.mkdirSync(UPLOAD_PATH, { recursive: true });
 }
 
+/**
+ * Supprime un fichier à partir du nom fourni.
+ * Utilise path.basename pour s'assurer que seul le nom du fichier est utilisé.
+ */
 const deleteFile = async (filename) => {
   try {
-    // On utilise path.basename pour s'assurer que seul le nom du fichier est utilisé
     const filePath = path.join(UPLOAD_PATH, path.basename(filename));
     await fs.promises.access(filePath);
     await fs.promises.unlink(filePath);
   } catch (error) {
-    // On log uniquement l'erreur de suppression sans la relancer
     console.error(`Erreur lors de la suppression du fichier: ${error.message}`);
   }
 };

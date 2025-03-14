@@ -1,8 +1,11 @@
+// src/controllers/EventControllers/TicketCategoryControllers.js
 import db from "../../models/event/index.js";
 
 const { Event, TicketCategory } = db;
 
-// Créer une catégorie de ticket pour un événement
+/**
+ * Créer une catégorie de ticket pour un événement.
+ */
 export const createTicketCategory = async (req, res) => {
   const { eventId, name, quantity, price } = req.body;
 
@@ -13,13 +16,13 @@ export const createTicketCategory = async (req, res) => {
   }
 
   try {
-    // Vérifier que l'événement existe
+    // Vérifie que l'évènement existe
     const event = await Event.findByPk(eventId);
     if (!event) {
       return res.status(404).json({ message: "Événement non trouvé" });
     }
 
-    // Créer la catégorie
+    // Crée la catégorie de ticket
     const newCategory = await TicketCategory.create({
       eventId,
       name,
@@ -35,7 +38,9 @@ export const createTicketCategory = async (req, res) => {
   }
 };
 
-// Récupérer toutes les catégories de ticket pour un événement donné
+/**
+ * Récupérer toutes les catégories de ticket pour un événement donné.
+ */
 export const getTicketCategoriesByEvent = async (req, res) => {
   const { eventId } = req.params;
   try {
@@ -46,7 +51,9 @@ export const getTicketCategoriesByEvent = async (req, res) => {
   }
 };
 
-// Mettre à jour une catégorie de ticket
+/**
+ * Mettre à jour une catégorie de ticket.
+ */
 export const updateTicketCategory = async (req, res) => {
   const { id } = req.params;
   const { name, quantity, price } = req.body;
@@ -64,7 +71,9 @@ export const updateTicketCategory = async (req, res) => {
   }
 };
 
-// Supprimer une catégorie de ticket
+/**
+ * Supprimer une catégorie de ticket.
+ */
 export const deleteTicketCategory = async (req, res) => {
   const { id } = req.params;
 

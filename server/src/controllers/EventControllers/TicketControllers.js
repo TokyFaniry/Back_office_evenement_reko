@@ -1,3 +1,4 @@
+// src/controllers/EventControllers/TicketControllers.js
 import axios from "axios";
 import db from "../../models/event/index.js";
 import crypto from "crypto";
@@ -7,25 +8,26 @@ const { Ticket, TicketCategory, sequelize } = db;
 const QUANTUM_API_URL = "https://qrng.anu.edu.au/API/jsonI.php";
 const SERIAL_RETRY_LIMIT = 10;
 
-// Ensemble pour stocker temporairement les numéros de série générés
-const generatedSerials = new Set();
-
-// Fonction pour obtenir un nombre aléatoire quantique via l'API
+/**
+ * Obtient un ou plusieurs nombres aléatoires quantiques via l'API,
+ * ou utilise crypto.randomBytes en cas d'échec.
+ */
 async function getQuantumNumbers(length = 2) {
   try {
     const response = await axios.get(
       `${QUANTUM_API_URL}?length=${length}&type=uint8`,
       { timeout: 3000 }
     );
-    // On s'assure de retourner des nombres (ici des valeurs numériques)
     return response.data?.data || [];
   } catch {
-    // En cas d'échec, on utilise crypto.randomBytes et on convertit en tableau de nombres
+    // En cas d'échec, génération via crypto.randomBytes
     return Array.from(crypto.randomBytes(length));
   }
 }
 
-// Fonction pour générer un numéro de série unique
+/**
+ * Génère un numéro de série à partir de valeurs quantiques et aléatoires.
+ */
 async function generateSerialNumber() {
   const [q1, q2] = await getQuantumNumbers(2);
   return [
@@ -37,6 +39,9 @@ async function generateSerialNumber() {
   ].join("");
 }
 
+/**
+ * Génère un numéro de série unique en vérifiant qu'il n'existe pas déjà en base de données.
+ */
 async function generateUniqueSerialNumber() {
   for (let i = 0; i < SERIAL_RETRY_LIMIT; i++) {
     const serial = await generateSerialNumber();
@@ -46,13 +51,17 @@ async function generateUniqueSerialNumber() {
   throw new Error("Serial generation failed");
 }
 
-// Contrôleur pour créer un ticket
+/**
+ * Création d'un ticket.
+ * Vérifie la disponibilité de la catégorie, génère un serial unique,
+ * crée le ticket et décrémente la quantité disponible dans la catégorie.
+ */
 export const createTicket = async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
-    // On attend que les champs eventId, categoryId, email, telephone soient fournis
     const { eventId, categoryId } = req.body;
-    // Vérifier la catégorie et s'assurer qu'il reste des tickets disponibles
+
+    // Vérifier que la catégorie existe et qu'il reste des tickets disponibles
     const category = await TicketCategory.findByPk(categoryId, {
       lock: true,
       transaction,
@@ -63,9 +72,9 @@ export const createTicket = async (req, res) => {
       return res.status(400).json({ error: "Category unavailable" });
     }
 
-    // Génération du numéro de série unique
+    // Génération d'un numéro de série unique
     const serialNumber = await generateUniqueSerialNumber();
-    // Création d'un ticket_code (ici, une valeur simple basée sur le timestamp)
+    // Création d'un ticket_code simple basé sur le timestamp
     const ticketCode = `TCK-${Date.now()}`;
 
     // Création du ticket dans la base de données
@@ -78,7 +87,7 @@ export const createTicket = async (req, res) => {
       { transaction }
     );
 
-    // Décrémentez la quantité disponible dans la catégorie
+    // Décrémente la quantité disponible dans la catégorie
     await category.decrement("quantity", { by: 1, transaction });
     await transaction.commit();
 
@@ -93,7 +102,9 @@ export const createTicket = async (req, res) => {
   }
 };
 
-// Contrôleur pour récupérer tous les tickets
+/**
+ * Récupère tous les tickets.
+ */
 export const getAllTickets = async (req, res) => {
   try {
     const tickets = await Ticket.findAll();
@@ -103,7 +114,9 @@ export const getAllTickets = async (req, res) => {
   }
 };
 
-// Contrôleur pour récupérer un ticket par son ID
+/**
+ * Récupère un ticket par son ID.
+ */
 export const getTicketById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -117,7 +130,9 @@ export const getTicketById = async (req, res) => {
   }
 };
 
-// Contrôleur pour mettre à jour un ticket (pour modifier email, telephone ou placement)
+/**
+ * Met à jour un ticket pour modifier son email, téléphone ou placement.
+ */
 export const updateTicket = async (req, res) => {
   const { id } = req.params;
   const { email, telephone, placement } = req.body;
@@ -133,7 +148,9 @@ export const updateTicket = async (req, res) => {
   }
 };
 
-// Contrôleur pour supprimer un ticket
+/**
+ * Supprime un ticket.
+ */
 export const deleteTicket = async (req, res) => {
   const { id } = req.params;
   try {
@@ -148,6 +165,9 @@ export const deleteTicket = async (req, res) => {
   }
 };
 
+/**
+ * Fonction d'aide pour la gestion des erreurs.
+ */
 function handleError(res, error) {
   const status = error.name === "SequelizeUniqueConstraintError" ? 409 : 500;
   res.status(status).json({

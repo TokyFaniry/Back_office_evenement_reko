@@ -1,52 +1,109 @@
-.ContenuAjoutForm{
-    position: absolute;
-    top: 5.5rem;
-    left: 16rem;
-    width: 84% !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center !important;
-    align-items: center !important;
-   
+/* AjoutForm.css */
+
+.ajout-container {
+  max-width: 700px;
+  margin: 8rem auto; /* Marge supérieure ample pour descendre le formulaire */
+  padding: 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: "Open Sans", sans-serif;
+
+  /* Centrer le contenu du conteneur */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.ContenuAjoutForm h3{
-    font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
+.ajout-container h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.formulaire {
+  /* Pour centrer le formulaire lui-même */
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
   font-weight: 600;
-  font-style: normal;
-  font-size: 23px;
-  font-variation-settings:
-    "wdth" 100;
-    margin: 10px 10px;
+  color: #555;
 }
 
-.formulaires{
-    text-align: start !important;
-    width: 95% !important;
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-.enr{
-    position: relative;
-    top: 10px;
-    width: 100% !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
 }
 
-.enrbtn{
-    width: 95% !important;
+.submit-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
-.back-arrow{
-    position: absolute;
-    top: 15px;
-    right: 40px;
-    cursor: pointer;
-    color: #696969;
+.submit-btn {
+  padding: 0.75rem 2rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.back-arrow:hover{
-    color: #000000;
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.message {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ajout-container {
+    margin: 5rem 1rem; /* Marge supérieure réduite pour mobile */
+    padding: 1rem;
+  }
+  .ajout-container h3 {
+    font-size: 1.6rem;
+  }
+  .submit-btn {
+    width: 100%;
+  }
 }

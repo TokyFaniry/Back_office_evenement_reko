@@ -105,3 +105,88 @@
 {"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T08:40:55.298Z"}
 {"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T08:40:55.308Z"}
 {"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T08:40:55.310Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:22:20.308Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:22:20.671Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:22:20.784Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:22:20.811Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:22:20.816Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:23:21.055Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:23:21.488Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:23:21.629Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:23:21.654Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:23:21.658Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:27:29.209Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:27:29.486Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:27:29.579Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:27:29.596Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:27:29.598Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:29:31.816Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:29:32.138Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:29:32.212Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:29:32.227Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:29:32.229Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:29:48.816Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:29:49.137Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:29:49.228Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:29:49.243Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:29:49.246Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:30:27.066Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:30:27.413Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:30:27.503Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:30:27.520Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:30:27.525Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:36:03.723Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:36:04.504Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:36:04.602Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:36:04.618Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:36:04.621Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:39:02.671Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:39:02.967Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:39:03.070Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:39:03.086Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:39:03.088Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:41:06.469Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:41:06.872Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:41:07.002Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:41:07.022Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:41:07.023Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:44:54.210Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:44:54.686Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:44:54.778Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:44:54.792Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:44:54.794Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:45:08.893Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:45:09.219Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:45:09.329Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:45:09.345Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:45:09.351Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:47:58.774Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:48:00.441Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:48:00.901Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:48:00.945Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:48:00.984Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:48:08.816Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:48:09.112Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:48:09.187Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:48:09.199Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:48:09.202Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:48:36.286Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:48:36.659Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:48:36.767Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:48:36.783Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:48:36.786Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:50:56.319Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:50:56.615Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:50:56.684Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:50:56.703Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:50:56.705Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:51:09.589Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:51:09.858Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:51:09.949Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:51:09.970Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:51:09.972Z"}
+{"level":"info","message":"Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-14T17:51:29.653Z"}
+{"level":"info","message":"Connexion à la base de données établie avec succès.","timestamp":"2025-03-14T17:51:30.040Z"}
+{"level":"info","message":"Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-14T17:51:30.119Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-03-14T17:51:30.135Z"}
+{"level":"info","message":"http://localhost:3001","timestamp":"2025-03-14T17:51:30.138Z"}
