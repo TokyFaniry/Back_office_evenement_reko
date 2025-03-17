@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = {
-  up: async (context) => {
-    const { queryInterface, Sequelize } = context; // Récupère queryInterface et Sequelize
+  up: async (queryInterface, Sequelize) => {
+    // Création de la table Tickets
     await queryInterface.createTable("Tickets", {
       id: {
         allowNull: false,
@@ -70,8 +70,9 @@ module.exports = {
     });
   },
 
-  down: async (context) => {
-    const { queryInterface } = context;
-    await queryInterface.dropTable("Tickets");
+  down: async (queryInterface, Sequelize) => {
+    // Ajoutez l'option cascade pour forcer la suppression malgré les dépendances
+    await queryInterface.dropTable("Tickets", { cascade: true });
+    console.log("🗑️ Table 'Tickets' supprimée avec succès (cascade)");
   },
 };

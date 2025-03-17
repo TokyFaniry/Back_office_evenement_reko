@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = {
-  up: async (context) => {
-    const { queryInterface, Sequelize } = context; // Récupère queryInterface et Sequelize
+  up: async (queryInterface, Sequelize) => {
+    // Change 'context' en paramètres explicites
     await queryInterface.createTable("Images", {
       id: {
         allowNull: false,
@@ -37,8 +37,8 @@ module.exports = {
     });
   },
 
-  down: async (context) => {
-    const { queryInterface } = context;
+  down: async (queryInterface, Sequelize) => {
+    // Même modification ici
     await queryInterface.dropTable("Images");
   },
 };

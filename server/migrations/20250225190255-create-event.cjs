@@ -1,8 +1,7 @@
 "use strict";
 
 module.exports = {
-  up: async (context) => {
-    const { queryInterface, Sequelize } = context; // Récupère queryInterface et Sequelize
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("Events", {
       id: {
         allowNull: false,
@@ -47,8 +46,28 @@ module.exports = {
     });
   },
 
-  down: async (context) => {
-    const { queryInterface } = context;
-    await queryInterface.dropTable("Events");
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.sequelize.transaction(async (transaction) => {
+      // Supprimer d'abord la contrainte de la table 'tickets'
+      try {
+        await queryInterface.removeConstraint(
+          "tickets",
+          "tickets_event_id_fkey",
+          { transaction }
+        );
+        console.log(
+          "✅ Contrainte 'tickets_event_id_fkey' supprimée avec succès"
+        );
+      } catch (error) {
+        console.log(
+          "⚠️ Erreur lors de la suppression de la contrainte 'tickets_event_id_fkey':",
+          error.message
+        );
+        // Vous pouvez choisir de continuer ou de stopper en fonction de vos besoins.
+      }
+      // Puis supprimer la table 'Events'
+      await queryInterface.dropTable("Events", { transaction });
+      console.log("🗑️ Table 'Events' supprimée avec succès");
+    });
   },
 };

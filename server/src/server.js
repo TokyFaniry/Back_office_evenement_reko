@@ -12,13 +12,13 @@ const { Client } = pkg; // Import du module pg en mode CommonJS
 import { Umzug, SequelizeStorage } from "umzug";
 import http from "http";
 import { initSocket } from "./config/socket.js"; // Initialisation de Socket.IO
-import { Sequelize } from "sequelize"; // Import de Sequelize pour le contexte des migrations
-import { createRequire } from "module"; // Permet d'utiliser require en ESM
+import { Sequelize } from "sequelize"; // Pour le contexte des migrations
+import { createRequire } from "module"; // Pour utiliser require en ESM
 const require = createRequire(import.meta.url);
 
 dotenv.config();
 
-console.log("Mot de passe utilisé :", process.env.DB_PASSWORD);
+console.log("🔑 Mot de passe utilisé :", process.env.DB_PASSWORD);
 
 const app = express();
 
@@ -70,7 +70,7 @@ async function createDatabaseIfNotExists() {
     host: DB_HOST,
     port: DB_PORT,
     user: DB_USER,
-    password: DB_PASSWORD, // Utilisation de la variable d'environnement
+    password: DB_PASSWORD,
     database: "postgres", // Connexion à la base par défaut
   });
 
@@ -82,12 +82,15 @@ async function createDatabaseIfNotExists() {
     );
     if (res.rowCount === 0) {
       await client.query(`CREATE DATABASE "${DB_NAME}"`);
-      logger.info(`Base de données "${DB_NAME}" créée.`);
+      logger.info(`🆕 Base de données "${DB_NAME}" créée.`);
     } else {
-      logger.info(`Base de données "${DB_NAME}" existe déjà.`);
+      logger.info(`📚 Base de données "${DB_NAME}" existe déjà.`);
     }
   } catch (error) {
-    logger.error("Erreur lors de la création de la base de données :", error);
+    logger.error(
+      "❌ Erreur lors de la création de la base de données :",
+      error
+    );
     process.exit(1);
   } finally {
     await client.end();
@@ -96,7 +99,7 @@ async function createDatabaseIfNotExists() {
 
 /**
  * Exécute les migrations avec Umzug.
- * On utilise l'option "resolve" pour injecter explicitement le contexte dans chaque migration.
+ * Nous utilisons l'option "resolve" pour injecter le contexte nécessaire dans chaque migration.
  */
 async function runMigrations() {
   try {
@@ -125,9 +128,9 @@ async function runMigrations() {
       logger,
     });
     await umzug.up();
-    logger.info("Toutes les migrations ont été exécutées avec succès.");
+    logger.info("✅ Toutes les migrations ont été exécutées avec succès.");
   } catch (error) {
-    logger.error("Erreur lors de l'exécution des migrations :", error);
+    logger.error("❌ Erreur lors de l'exécution des migrations :", error);
     process.exit(1);
   }
 }
@@ -137,7 +140,7 @@ async function runMigrations() {
   await createDatabaseIfNotExists();
   try {
     await sequelize.authenticate();
-    logger.info("Connexion à la base de données établie avec succès.");
+    logger.info("🔌 Connexion à la base de données établie avec succès.");
     await runMigrations();
 
     // Création du serveur HTTP
@@ -145,11 +148,11 @@ async function runMigrations() {
     initSocket(server);
 
     server.listen(PORT, "0.0.0.0", () => {
-      logger.info(`Server running on port ${PORT}`);
-      logger.info(`http://localhost:${PORT}`);
+      logger.info(`🚀 Server running on port ${PORT}`);
+      logger.info(`🌐 http://localhost:${PORT}`);
     });
   } catch (error) {
-    logger.error("Impossible de se connecter à la base de données :", error);
+    logger.error("❌ Impossible de se connecter à la base de données :", error);
     process.exit(1);
   }
 })();
