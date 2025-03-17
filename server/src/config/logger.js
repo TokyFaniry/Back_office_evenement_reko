@@ -40,7 +40,7 @@ const logger = winston.createLogger({
 
 // Stream pour morgan (si utilisé avec Express)
 logger.stream = {
-  write: (message) => logger.info(message.trim()),
+  write: (message) => logger.info(`📣 ${message.trim()}`),
 };
 
 export default logger;
