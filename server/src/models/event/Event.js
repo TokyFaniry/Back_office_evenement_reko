@@ -8,13 +8,16 @@ const Event = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        // Validation personnalisée garantissant que la date soit future
         isFutureDate(value) {
           if (new Date(value) <= new Date()) {
             throw new Error("La date doit être dans le futur");
           }
         },
       },
+    },
+    heure: {
+      type: DataTypes.TIME,
+      allowNull: false,
     },
     description: {
       type: DataTypes.TEXT,
@@ -60,8 +63,14 @@ const Event = sequelize.define(
       },
     },
     type: {
-      type: DataTypes.STRING, // On conserve le type comme STRING
+      type: DataTypes.STRING,
       allowNull: false,
+    },
+    etatDeBillets: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "disponible",
+      field: "etat_de_billets",
     },
   },
   {
@@ -69,6 +78,7 @@ const Event = sequelize.define(
     createdAt: "created_at",
     updatedAt: "updated_at",
     tableName: "Events",
+    freezeTableName: true,
     hooks: {
       beforeCreate: (event) => {
         if (event.title) event.title = event.title.trim();
@@ -86,7 +96,6 @@ const Event = sequelize.define(
   }
 );
 
-// Associations définies dans l'index ou lors de l'initialisation globale des modèles
 Event.associate = (models) => {
   Event.hasOne(models.Image, {
     foreignKey: "event_id",

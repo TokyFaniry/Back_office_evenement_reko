@@ -1,4 +1,3 @@
-// src/controllers/EventControllers/EventsControllers.js
 import path from "path";
 import db from "../../models/event/index.js";
 import sequelize from "../../config/database.js";
@@ -12,10 +11,21 @@ const { Event, Image, Ticket, TicketCategory } = db;
 // ----------------------------------------------------------------------------
 export const createEvent = async (req, res) => {
   try {
-    const { date, description, location, totalSeats, type, title } = req.body;
+    // Extraction des nouveaux champs "heure" et "etatDeBillets" (optionnel)
+    const {
+      date,
+      heure,
+      description,
+      location,
+      totalSeats,
+      type,
+      title,
+      etatDeBillets,
+    } = req.body;
     if (
       !req.file ||
       !date ||
+      !heure ||
       !description ||
       !location ||
       !totalSeats ||
@@ -26,12 +36,22 @@ export const createEvent = async (req, res) => {
     }
 
     const newEvent = await sequelize.transaction(async (transaction) => {
+      // Création de l'événement en incluant les nouveaux champs.
       const event = await Event.create(
-        { date, description, location, totalSeats, type, title },
+        {
+          date,
+          heure,
+          description,
+          location,
+          totalSeats,
+          type,
+          title,
+          etatDeBillets,
+        },
         { transaction }
       );
 
-      // Fallback pour obtenir l'host. Remarque : si req.get("host") est absent, on utilise "localhost:3001"
+      // Fallback pour obtenir l'host. Si req.get("host") est absent, on utilise "localhost:3001"
       const host = req.get("host") || "localhost:3001";
       // Construction d'une URL absolue valide pour l'image
       const imageUrl = `${req.protocol}://${host}/uploads/events/${req.file.filename}`;
@@ -103,13 +123,31 @@ export const getEventById = async (req, res) => {
   const { id } = req.params;
   try {
     const event = await Event.findByPk(id, {
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "date",
+        "heure",
+        "location",
+        "totalSeats",
+        "type",
+      ],
       include: [
-        { model: Image, as: "image", attributes: ["imageUrl"] },
+        {
+          model: Image,
+          as: "image",
+          attributes: ["imageUrl"],
+        },
         {
           model: Ticket,
           as: "tickets",
           include: [
-            { model: TicketCategory, as: "category", attributes: ["name"] },
+            {
+              model: TicketCategory,
+              as: "category",
+              attributes: ["name"],
+            },
           ],
         },
       ],
@@ -135,7 +173,9 @@ export const getEventById = async (req, res) => {
 // ----------------------------------------------------------------------------
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
-  const { date, description, location, totalSeats } = req.body;
+  // Extraction des nouveaux champs dans le body
+  const { date, heure, description, location, totalSeats, etatDeBillets } =
+    req.body;
   const newImageUrl = req.file
     ? `${req.protocol}://${
         req.get("host") || "localhost:3001"
@@ -150,7 +190,7 @@ export const updateEvent = async (req, res) => {
   try {
     await sequelize.transaction(async (transaction) => {
       await existingEvent.update(
-        { date, description, location, totalSeats },
+        { date, heure, description, location, totalSeats, etatDeBillets },
         { transaction, returning: true }
       );
 

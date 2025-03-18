@@ -1,4 +1,3 @@
-// src/controllers/EventControllers/TicketCategoryControllers.js
 import db from "../../models/event/index.js";
 
 const { Event, TicketCategory } = db;
@@ -9,31 +8,54 @@ const { Event, TicketCategory } = db;
 export const createTicketCategory = async (req, res) => {
   const { eventId, name, quantity, price } = req.body;
 
-  if (!eventId || !name || !quantity || !price) {
+  if (!eventId || !name?.trim() || quantity == null || price == null) {
     return res.status(400).json({
-      message: "Les champs eventId, name, quantity et price sont obligatoires",
+      message: "Tous les champs (eventId, name, quantity, price) sont requis",
     });
   }
 
   try {
-    // Vérifie que l'évènement existe
+    // Vérification existence de l'événement
     const event = await Event.findByPk(eventId);
     if (!event) {
-      return res.status(404).json({ message: "Événement non trouvé" });
+      return res.status(404).json({ message: "Événement introuvable" });
     }
 
-    // Crée la catégorie de ticket
+    // Normalisation du nom
+    const normalizedName = name.trim().toLowerCase();
+
+    // Vérification existence de la catégorie
+    const existingCategory = await TicketCategory.findOne({
+      where: {
+        eventId,
+        name: normalizedName,
+      },
+    });
+
+    if (existingCategory) {
+      return res.status(409).json({
+        message: `Une catégorie "${normalizedName}" existe déjà pour cet événement`,
+      });
+    }
+
     const newCategory = await TicketCategory.create({
       eventId,
-      name,
+      name: normalizedName,
       quantity,
       price,
     });
 
-    res
-      .status(201)
-      .json({ message: "Catégorie créée avec succès", category: newCategory });
+    res.status(201).json({
+      message: "Catégorie créée avec succès",
+      category: newCategory,
+    });
   } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(409).json({
+        message: "Une catégorie avec ce nom existe déjà pour cet événement",
+      });
+    }
+    console.error("Erreur création catégorie:", error);
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };
@@ -61,12 +83,45 @@ export const updateTicketCategory = async (req, res) => {
   try {
     const category = await TicketCategory.findByPk(id);
     if (!category) {
-      return res.status(404).json({ message: "Catégorie non trouvée" });
+      return res.status(404).json({ message: "Catégorie introuvable" });
     }
 
-    await category.update({ name, quantity, price });
-    res.status(200).json({ message: "Catégorie mise à jour", category });
+    // Vérification unicité si modification du nom
+    if (name && name.trim().toLowerCase() !== category.name) {
+      const normalizedName = name.trim().toLowerCase();
+      const existing = await TicketCategory.findOne({
+        where: {
+          eventId: category.eventId,
+          name: normalizedName,
+          id: { [Sequelize.Op.ne]: id },
+        },
+      });
+
+      if (existing) {
+        return res.status(409).json({
+          message: `Une catégorie "${normalizedName}" existe déjà pour cet événement`,
+        });
+      }
+    }
+
+    const updates = {};
+    if (name) updates.name = name.trim().toLowerCase();
+    if (quantity !== undefined) updates.quantity = quantity;
+    if (price !== undefined) updates.price = price;
+
+    await category.update(updates);
+
+    res.status(200).json({
+      message: "Catégorie mise à jour",
+      category: await TicketCategory.findByPk(id),
+    });
   } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(409).json({
+        message: "Une catégorie avec ce nom existe déjà pour cet événement",
+      });
+    }
+    console.error("Erreur mise à jour catégorie:", error);
     res.status(500).json({ message: "Erreur serveur", error: error.message });
   }
 };
@@ -76,7 +131,6 @@ export const updateTicketCategory = async (req, res) => {
  */
 export const deleteTicketCategory = async (req, res) => {
   const { id } = req.params;
-
   try {
     const category = await TicketCategory.findByPk(id);
     if (!category) {

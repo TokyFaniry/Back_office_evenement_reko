@@ -8,38 +8,51 @@ const TicketCategory = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       field: "event_id",
-      validate: { isInt: true },
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: "event_category", // Contrainte d'unicité sur la combinaison event / name
-      validate: { notEmpty: true },
+      set(value) {
+        this.setDataValue("name", value.trim());
+      },
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: { min: 0 },
+      validate: {
+        min: 0,
+      },
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-      validate: { min: 0 },
+      validate: {
+        min: 0,
+      },
     },
   },
   {
-    timestamps: true,
-    freezeTableName: true,
     tableName: "TicketCategories",
-    hooks: {
-      beforeCreate: (category) => {
-        category.name = category.name.trim();
+    freezeTableName: true,
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
+    // Contraintes uniques composées sur event_id et name
+    indexes: [
+      {
+        unique: true,
+        fields: ["event_id", "name"],
       },
-      beforeUpdate: (category) => {
-        category.name = category.name.trim();
-      },
-    },
+    ],
   }
 );
+
+TicketCategory.associate = (models) => {
+  TicketCategory.hasMany(models.Ticket, {
+    foreignKey: "category_id",
+    as: "tickets",
+    onDelete: "CASCADE",
+  });
+};
 
 export default TicketCategory;

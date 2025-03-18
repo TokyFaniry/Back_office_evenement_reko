@@ -1,3 +1,4 @@
+// src/routes/Events/ticketCategory.js
 import express from "express";
 import {
   createTicketCategory,
@@ -11,7 +12,7 @@ const router = express.Router();
 // Créer une catégorie pour un événement
 router.post("/", createTicketCategory);
 
-// Récupérer toutes les catégories d'un événement (exemple : GET /api/ticket-categories/event/1)
+// Récupérer toutes les catégories d'un événement
 router.get("/event/:eventId", getTicketCategoriesByEvent);
 
 // Mettre à jour une catégorie par son id

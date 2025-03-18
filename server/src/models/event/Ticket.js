@@ -48,6 +48,8 @@ const Ticket = sequelize.define(
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
+    tableName: "Tickets",
+    freezeTableName: true,
     indexes: [
       { unique: true, fields: ["serial_number"] },
       { unique: true, fields: ["ticket_code"] },
@@ -56,7 +58,6 @@ const Ticket = sequelize.define(
     ],
     hooks: {
       beforeCreate: (ticket) => {
-        // Normalisation de l’email et des autres champs au besoin
         ticket.email = ticket.email.toLowerCase().trim();
       },
       beforeUpdate: (ticket) => {
