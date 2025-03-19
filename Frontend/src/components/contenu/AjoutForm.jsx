@@ -1,18 +1,19 @@
 import { useState } from "react";
 import axiosInstance from "../../services/axiosInstance";
 import "../../assets/CSS/AjoutForm.css";
+import { message } from "antd";
 
-export function AjoutForm() {
+export function AjoutForm({ onEventAdded }) {
   const [titre, setTitre] = useState("");
   const [typeEvenement, setTypeEvenement] = useState("Concert");
   const [autreType, setAutreType] = useState("");
   const [date, setDate] = useState("");
+  const [heure, setHeure] = useState(""); // Ajout de l'heure
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [totalSeats, setTotalSeats] = useState("");
   const [poster, setPoster] = useState(null);
   const [fileError, setFileError] = useState("");
-  const [message, setMessage] = useState("");
 
   // Vérification du format de l'image
   const handleFileChange = (e) => {
@@ -36,13 +37,14 @@ export function AjoutForm() {
     if (
       !titre ||
       !date ||
+      !heure || // Vérification de l'heure
       !description ||
       !location ||
       !totalSeats ||
       !poster ||
       (typeEvenement === "Autres" && !autreType)
     ) {
-      setMessage("Tous les champs sont obligatoires");
+      message.error("Tous les champs sont obligatoires");
       return;
     }
 
@@ -53,10 +55,14 @@ export function AjoutForm() {
       typeEvenement === "Autres" ? autreType : typeEvenement
     );
     formData.append("date", date);
+    formData.append("heure", heure); // Ajout de l'heure
     formData.append("description", description);
     formData.append("location", location);
     formData.append("totalSeats", totalSeats);
     formData.append("poster", poster);
+
+    // Affichage du message de chargement
+    const hideLoading = message.loading("Enregistrement en cours...", 0);
 
     try {
       const response = await axiosInstance.post("/events", formData, {
@@ -65,20 +71,31 @@ export function AjoutForm() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      hideLoading(); // Cache le message de chargement
+
       if (response.data.success) {
-        setMessage("Événement créé avec succès!");
+        message.success("Événement créé avec succès!");
+        if (onEventAdded) {
+          onEventAdded(response.data.event);
+        }
+
         // Réinitialisation du formulaire
         setTitre("");
         setTypeEvenement("Concert");
         setAutreType("");
         setDate("");
+        setHeure(""); // Réinitialisation de l'heure
         setDescription("");
         setLocation("");
         setTotalSeats("");
         setPoster(null);
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || "Erreur inconnue");
+      hideLoading();
+      message.error(
+        error.response?.data?.message || "Erreur inconnue lors de la création"
+      );
     }
   };
 
@@ -131,6 +148,15 @@ export function AjoutForm() {
             />
           </div>
           <div className="form-group">
+            <label htmlFor="heureEvenement">Heure</label>
+            <input
+              type="time"
+              id="heureEvenement"
+              value={heure}
+              onChange={(e) => setHeure(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
             <label htmlFor="descriptionEvenement">Description</label>
             <textarea
               id="descriptionEvenement"
@@ -176,7 +202,6 @@ export function AjoutForm() {
             </button>
           </div>
         </form>
-        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );
