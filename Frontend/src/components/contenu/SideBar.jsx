@@ -1,3 +1,5 @@
+// src/components/Sidebar.jsx
+import React from "react";
 import { Link } from "react-router-dom";
 import { Home, Settings, X, Mic } from "lucide-react";
 import logo from "../../assets/images/logo.png";

@@ -10,7 +10,7 @@ const Image = sequelize.define(
       allowNull: false,
       field: "event_id",
       references: {
-        model: "Events", // Assurez-vous que ce nom correspond à la table Events
+        model: "Events", // doit correspondre à la table Events
         key: "id",
       },
       onDelete: "CASCADE",
@@ -21,15 +21,12 @@ const Image = sequelize.define(
       field: "image_url",
       validate: {
         isValidUrl(value) {
-          // Autoriser explicitement les URLs qui contiennent 'localhost' ou '127.0.0.1'
           if (value.includes("localhost") || value.includes("127.0.0.1")) {
-            // Vous pouvez aussi vérifier ici la présence du protocole :
             if (!value.startsWith("http://") && !value.startsWith("https://")) {
               throw new Error("L'URL de l'image doit être valide");
             }
-            return; // l'URL est acceptée
+            return;
           }
-          // Pour les autres hôtes, on utilise validator.isURL
           if (
             !validator.isURL(value, {
               require_protocol: true,
@@ -47,6 +44,7 @@ const Image = sequelize.define(
     createdAt: "created_at",
     updatedAt: "updated_at",
     tableName: "Images",
+    freezeTableName: true,
     hooks: {
       beforeCreate: (img) => {
         if (img.imageUrl) img.imageUrl = img.imageUrl.trim();

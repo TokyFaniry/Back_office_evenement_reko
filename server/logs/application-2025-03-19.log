@@ -1,0 +1,10 @@
+{"level":"info","message":"📚 Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-19T17:04:13.424Z"}
+{"level":"info","message":"🔌 Connexion à la base de données établie avec succès.","timestamp":"2025-03-19T17:04:13.733Z"}
+{"level":"info","message":"✅ Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-19T17:04:13.849Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-03-19T17:04:13.872Z"}
+{"level":"info","message":"🌐 http://localhost:3001","timestamp":"2025-03-19T17:04:13.876Z"}
+{"level":"info","message":"📚 Base de données \"rekoevents\" existe déjà.","timestamp":"2025-03-19T18:15:30.558Z"}
+{"level":"info","message":"🔌 Connexion à la base de données établie avec succès.","timestamp":"2025-03-19T18:15:30.971Z"}
+{"level":"info","message":"✅ Toutes les migrations ont été exécutées avec succès.","timestamp":"2025-03-19T18:15:31.104Z"}
+{"level":"info","message":"🚀 Server running on port 3001","timestamp":"2025-03-19T18:15:31.128Z"}
+{"level":"info","message":"🌐 http://localhost:3001","timestamp":"2025-03-19T18:15:31.131Z"}

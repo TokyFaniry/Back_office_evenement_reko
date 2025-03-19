@@ -1,0 +1,37 @@
+.content-container {
+  margin-left: 125px;
+  margin-top: 25px;
+  padding-top: 64px;
+  padding: 24px;
+  background: #f0f2f5;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .content-container {
+    margin-left: 0;
+  }
+
+  .content-container.sidebar-open {
+    margin-left: 256px;
+  }
+}
+
+/* Overlay pour mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-overlay {
+    display: block;
+  }
+}

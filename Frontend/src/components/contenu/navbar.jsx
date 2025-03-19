@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import React from "react";
 import { Bell, Search, User, Menu } from "lucide-react";
 

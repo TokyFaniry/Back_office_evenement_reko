@@ -1,3 +1,4 @@
+// src/components/EventManagement.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -30,7 +31,7 @@ import Countdown from "./Countdown";
 
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
-//const { Countdown } = Statistic;
+
 function EventManagement() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ function EventManagement() {
     fetchTicketCategories();
   }, [id]);
 
-  // Gestion de l'ajout d'une nouvelle catégorie de billet.
+  // Gestion de l'ajout d'une nouvelle catégorie de billet
   const handleAddCategory = async (values) => {
     try {
       const payload = {
@@ -115,7 +116,7 @@ function EventManagement() {
   const totalSold = event?.tickets?.reduce((sum, t) => sum + t.sold, 0) || 0;
   const remainingSeats = totalSeats - totalSold;
 
-  //Calcul date
+  // Calcul de la date et heure de l'événement
   const eventDateTime =
     event?.date && event?.heure
       ? moment(event.date)
@@ -133,14 +134,20 @@ function EventManagement() {
     <Row gutter={[16, 16]}>
       {event.tickets.map((ticket) => (
         <Col xs={24} sm={12} md={8} key={ticket.id}>
-          <Card bordered hoverable style={{ borderRadius: "8px" }}>
+          <Card
+            bordered
+            hoverable
+            style={{ borderRadius: "8px" }}
+            bodyStyle={{ padding: "16px" }}
+          >
             <Title level={4}>{ticket.category.name}</Title>
             <Statistic title="Price" value={ticket.price} prefix="MGA" />
             <Progress
               percent={Math.round((ticket.sold / ticket.quantity) * 100)}
               status={ticket.sold === ticket.quantity ? "success" : "active"}
+              style={{ marginTop: "12px" }}
             />
-            <Paragraph style={{ marginTop: 8 }}>
+            <Paragraph style={{ marginTop: "8px" }}>
               Sold: {ticket.sold} / {ticket.quantity}
             </Paragraph>
           </Card>
@@ -158,13 +165,14 @@ function EventManagement() {
             bordered
             hoverable
             style={{ borderRadius: "8px", textAlign: "center" }}
+            bodyStyle={{ padding: "16px" }}
           >
             <Title level={4}>{category.name}</Title>
             <Statistic title="Price (MGA)" value={category.price} />
             <Statistic
               title="Quantity"
               value={category.quantity}
-              style={{ marginTop: 8 }}
+              style={{ marginTop: "8px" }}
             />
           </Card>
         </Col>
@@ -189,16 +197,7 @@ function EventManagement() {
   const ticketSummary = getTicketCategoriesSummary();
 
   return (
-    // Ajustement pour tenir compte de la navbar et de la sidebar
-    <div
-      style={{
-        marginLeft: "256px", // largeur de la sidebar
-        paddingTop: "64px", // hauteur de la navbar
-        padding: "24px",
-        background: "#f0f2f5",
-        minHeight: "100vh",
-      }}
-    >
+    <div className="content-container" style={{ padding: "24px" }}>
       <Breadcrumb style={{ marginBottom: "16px" }}>
         <Breadcrumb.Item>
           <Button
@@ -214,7 +213,10 @@ function EventManagement() {
       </Breadcrumb>
 
       {loading ? (
-        <div style={{ textAlign: "center", paddingTop: "100px" }}>
+        <div
+          className="flex justify-center items-center"
+          style={{ paddingTop: "100px" }}
+        >
           <Spin tip="Loading event details..." size="large" />
         </div>
       ) : (
@@ -259,11 +261,13 @@ function EventManagement() {
                 </Paragraph>
               </div>
             </div>
+
             {/* Countdown Timer */}
-            <Countdown
-              targetDate={eventDateTime}
-              style={{ marginBottom: "24px" }}
-            />
+            {eventDateTime && (
+              <div style={{ marginBottom: "24px" }}>
+                <Countdown targetDate={eventDateTime} />
+              </div>
+            )}
 
             {/* Event Description */}
             <Card style={{ marginBottom: "24px", borderRadius: "8px" }}>
@@ -333,12 +337,12 @@ function EventManagement() {
                         <Statistic
                           title="Tickets Sold"
                           value={summary.totalSold}
-                          style={{ marginTop: 8 }}
+                          style={{ marginTop: "8px" }}
                         />
                         <Statistic
                           title="Remaining"
                           value={summary.totalQuantity - summary.totalSold}
-                          style={{ marginTop: 8 }}
+                          style={{ marginTop: "8px" }}
                         />
                       </Card>
                     </Col>
